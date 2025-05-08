@@ -17,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang='pt-BR' dir='ltr'>
+    <html lang='pt-BR' dir='ltr' suppressHydrationWarning>
       <body className='antialiased scroll-smooth'>
         <InitColorSchemeScript attribute='class' />
         <AppRouterCacheProvider>
