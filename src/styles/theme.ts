@@ -1,20 +1,20 @@
-'use client';
-import { createTheme } from '@mui/material/styles';
-import { Roboto } from 'next/font/google';
+'use client'
+import { createTheme } from '@mui/material/styles'
+import { Roboto } from 'next/font/google'
 
 const roboto = Roboto({
   weight: ['300', '400', '500', '700'],
   subsets: ['latin'],
-  display: 'swap',
-});
+  display: 'swap'
+})
 
 const theme = createTheme({
   colorSchemes: { light: true, dark: true },
   cssVariables: {
-    colorSchemeSelector: 'class',
+    colorSchemeSelector: 'class'
   },
   typography: {
-    fontFamily: roboto.style.fontFamily,
+    fontFamily: roboto.style.fontFamily
   },
   components: {
     MuiAlert: {
@@ -24,14 +24,14 @@ const theme = createTheme({
             {
               props: { severity: 'info' },
               style: {
-                backgroundColor: '#60a5fa',
-              },
-            },
-          ],
-        },
-      },
-    },
-  },
-});
+                backgroundColor: '#60a5fa'
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+})
 
-export default theme;
+export default theme
