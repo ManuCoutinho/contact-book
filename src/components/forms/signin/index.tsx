@@ -11,14 +11,14 @@ import {
 } from '@mui/material'
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
 import { style } from './styles'
-import { useSingup } from './hooks/useSingup'
+import { useSingin } from './hooks/useSignin'
 import Toast from '@/components/toast'
 
-export default function SingupForm() {
+export default function SinginForm() {
   const {
     errors,
     register,
-    onCreateUser,
+    onLogin,
     open,
     handleClose,
     isSubmitting,
@@ -26,16 +26,11 @@ export default function SingupForm() {
     handleCloseToast,
     setOpen,
     isDisabled
-  } = useSingup()
+  } = useSingin()
   return (
     <>
-      <Button
-        color='secondary'
-        onClick={() => setOpen(true)}
-        sx={{ color: '#64748b' }}
-      >
-        Registrar
-      </Button>
+
+      <Button onClick={() => setOpen(true)} color='primary'>entrar</Button>
       <Toast {...toast} handleClose={handleCloseToast} />
 
       <Modal
@@ -47,7 +42,7 @@ export default function SingupForm() {
         <Paper
           component='form'
           sx={style}
-          onSubmit={onCreateUser}
+          onSubmit={onLogin}
           id='form-register-account'
           method='POST'
           aria-label='form-register-account'
@@ -61,7 +56,7 @@ export default function SingupForm() {
             form='form-register-account'
             className='size-full flex flex-col gap-6'
           >
-            <Typography variant='h5'>Crie sua conta</Typography>
+            <Typography variant='h5'>Faça o login</Typography>
             <TextField
               size='small'
               label='E-mail'
@@ -79,21 +74,11 @@ export default function SingupForm() {
               helperText={errors.password?.message}
               error={!!errors.password?.message}
             />
-            <TextField
-              label='Confirme a senha'
-              type='password'
-              size='small'
-              {...register('passwordConfirmation')}
-              helperText={errors.passwordConfirmation?.message}
-              error={!!errors.passwordConfirmation?.message}
-            />
           </fieldset>
-
           <Stack className='w-full mt-6'>
             <Button disabled={isDisabled} type='submit' loading={isSubmitting}>
-              Registrar
+              Entrar
             </Button>
-
           </Stack>
         </Paper>
       </Modal>

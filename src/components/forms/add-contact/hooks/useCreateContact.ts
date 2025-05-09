@@ -96,7 +96,7 @@ export function useCreateContact() {
 
   const onHandleContact: SubmitHandler<ContactForm> = async (data) => {
     if (!contact && location) {
-      createContact(data, location, '1')
+      createContact(data, location)
         .then(() => {
           reset()
           setToast({

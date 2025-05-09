@@ -1,24 +1,25 @@
 'use server'
 
 import { ContactForm } from "@/components/forms/add-contact/schema";
+import { session } from "@/lib/session";
 import { ApiException } from "@/utils";
 import { revalidateTag } from "next/cache";
 
-export default async function onCreateContact(body: ContactForm, location: string, user: string) {
-
+export default async function onCreateContact(body: ContactForm, location: string) {
+  const auth = await session()
   if (!location) throw new ApiException('Missing location', 400)
   if (!body) throw new ApiException('Missing valid body', 400)
-  if (!user) throw new ApiException('Missing [userid]', 400)
-
+  if (!auth) throw new ApiException('Unauthorized', 401)
+  const token = auth?.user?.accessToken
   const res = await fetch(`${process.env.API_URL}/contacts`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
     },
     body: JSON.stringify({
       ...body,
-      location: location,
-      userId: user
+      location: location
     })
   })
 

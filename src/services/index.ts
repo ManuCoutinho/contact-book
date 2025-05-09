@@ -5,6 +5,7 @@ import createContact from './create-contact.service'
 import getContacts from './get-contacts.service'
 import updateContact from './update-contact.service'
 import deleteContact from './remove-contact.service'
+import signIn from './signin.service'
 
 export {
   registerUser,
@@ -13,5 +14,6 @@ export {
   createContact,
   getContacts,
   updateContact,
-  deleteContact
+  deleteContact,
+  signIn
 }

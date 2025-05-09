@@ -1,12 +1,12 @@
 'use client'
-import { Button, Card, Container, Divider, Grid, Stack, Typography } from '@mui/material'
-import MenuBookTwoToneIcon from '@mui/icons-material/MenuBookTwoTone';
-import { ContactList, SingupForm, AddContactForm } from '@/components'
-import { useSearchParams } from 'next/navigation';
 import dynamic from 'next/dynamic';
-import type { Contact } from '@/types';
+import { useSearchParams } from 'next/navigation';
+import { Card, Container, Divider, Grid, Typography } from '@mui/material'
+import MenuBookTwoToneIcon from '@mui/icons-material/MenuBookTwoTone';
+import { ContactList, Header, AddContactForm } from '@/components'
 import { GeoLocationProvider } from '@/contexts/geolocation.context';
 import { ContactProvider } from '@/contexts/contact.context';
+import type { Contact } from '@/types';
 
 const Map = dynamic(() => import('@/components/map'), { ssr: false });
 
@@ -22,10 +22,7 @@ export default function HomeView({ data }: Readonly<{ data: Contact[] }>) {
 
   return (
     <Container maxWidth='xl' className='p-6 flex flex-col gap-6'>
-      <Stack direction='row' spacing={4} alignItems='center' alignSelf='flex-end'>
-        <Button color='primary'>entrar</Button>
-        <SingupForm />
-      </Stack>
+      <Header />
       <div>
         <span>
           <MenuBookTwoToneIcon fontSize='large' />

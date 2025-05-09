@@ -1,15 +1,18 @@
 import { NextResponse } from "next/server"
 import { prisma } from '@/lib/prisma'
-
+import { jwtDecoder } from '@/utils'
 
 export async function POST(request: Request) {
   const body = await request.json()
+  const auth = request.headers.get('Authorization')
 
   if (request.method !== 'POST') {
     return new NextResponse('Method not allowed', { status: 405 })
   }
-
-  if (!body) return new NextResponse('Missing required body', { status: 400 })
+  if (!auth) return new NextResponse('Unauthorized', { status: 401 })
+  const token = jwtDecoder<{ id: number; email: string }>(auth as string)
+  const userId = token?.id
+  if (!userId) return new NextResponse('Missing required body', { status: 400 })
 
   try {
     await prisma.contact.create({
@@ -18,7 +21,7 @@ export async function POST(request: Request) {
         name: body.name,
         phone: body.phone.replace('(', '').replace('-', '').replace(')', '').trim(),
         user: {
-          connect: { id: +body.userId }
+          connect: { id: +userId }
         },
         address: {
           create: {
@@ -49,10 +52,13 @@ export async function POST(request: Request) {
 }
 
 export async function GET(request: Request) {
+  const auth = request.headers.get('Authorization')
 
-  const userId = await request.headers.get('userId')
+  if (!auth) return new NextResponse('Unauthorized', { status: 401 })
+  const token = jwtDecoder<{ id: number; email: string }>(auth as string)
+  const userId = token?.id 
 
-  if (!userId) return new NextResponse('Missing required userId', { status: 400 })
+  if (!userId) return new NextResponse('Missing required body', { status: 400 })
 
   try {
     const contacts = await prisma.contact.findMany({

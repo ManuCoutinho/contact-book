@@ -5,6 +5,7 @@ import InitColorSchemeScript from '@mui/material/InitColorSchemeScript'
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter'
 import '@/styles/globals.css'
 import theme from '@/styles/theme'
+import { SessionProvider } from 'next-auth/react'
 
 export const metadata: Metadata = {
   title: 'My Contacts',
@@ -19,13 +20,15 @@ export default function RootLayout({
   return (
     <html lang='pt-BR' dir='ltr' suppressHydrationWarning>
       <body className='antialiased scroll-smooth'>
-        <InitColorSchemeScript attribute='class' />
-        <AppRouterCacheProvider>
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <main className='@container/main mx-auto p-6'>{children}</main>
-          </ThemeProvider>
-        </AppRouterCacheProvider>
+        <SessionProvider>
+          <InitColorSchemeScript attribute='class' />
+          <AppRouterCacheProvider>
+            <ThemeProvider theme={theme}>
+              <CssBaseline />
+              <main className='@container/main mx-auto p-6'>{children}</main>
+            </ThemeProvider>
+          </AppRouterCacheProvider>
+        </SessionProvider>
       </body>
     </html>
   )

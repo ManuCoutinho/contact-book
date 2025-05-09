@@ -32,4 +32,22 @@ content-type: application/json
   "password": ""
 }
 
+###
+PUT http://localhost:3000/api/contact/5
+content-type: application/json
 
+{
+    "name": "Cláudia Cristiane Almada",
+    "cpf": "31179962222",
+    "phone": "792917-1859",
+    "street": "Travessa Angélica Fonseca Santos",
+    "complement": "casa 2",
+    "neighborhood": "Getúlio Vargas",
+    "number": "4",
+    "city": "Aracaju",
+    "state": "Sergipe",
+    "country": "Brasil",
+    "cep": "49055640",
+    "location": "-10.907545,-37.05962",
+    "userId": 1
+}

@@ -1,21 +1,27 @@
 'use client'
 import { Fragment } from 'react'
+import { useSession } from 'next-auth/react'
 import { Box, Button, Divider, Grid, List, ListItem, ListItemText, ListItemButton, Stack, Typography } from '@mui/material'
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded'
 import { useGeolocation } from '@/hooks/useGeolocation'
+import { useContact } from '@/hooks/useContact'
 import setUrlParams from '@/utils/set-url-params'
 import phoneMask from '@/utils/phone-mask'
 import cpfMask from '@/utils/cpf-mask'
 import { ActionsMenu } from './actions.menu'
 import type { Contact } from '@/types'
-import { useContact } from '@/hooks/useContact'
 
 export default function ContactList({ contacts }: Readonly<{ contacts: Contact[] }>) {
+  const { data } = useSession()
   const { setGeolocation } = useGeolocation()
   const { contact: store } = useContact()
+  const isAuth = !!data?.user
   function handleCreateContact() {
-    setUrlParams([{ key: 'mode', value: 'create' }])
+    if (isAuth) {
+      setUrlParams([{ key: 'mode', value: 'create' }])
+    }
   }
+
   return (
     <Grid size={4} className='min-h-max'>
       <Stack direction='row' justifyContent='space-between'>
@@ -28,19 +34,19 @@ export default function ContactList({ contacts }: Readonly<{ contacts: Contact[]
           onClick={handleCreateContact}
           color='warning'
           startIcon={<AddCircleOutlineRoundedIcon fontSize='small' />}
-
+          disabled={!isAuth}
         >
           Novo
         </Button>
       </Stack>
-      {!contacts && (
+      {!isAuth ? (
         <Typography color='textDisabled' variant='caption' align='center'>
           Faça o login ou registre-se para utilizar
         </Typography>
-      )}
+      ) : (
       <Box sx={{ height: '100%' }}>
         <List dense>
-          {contacts.map((contact, i) => {
+              {contacts?.map((contact, i) => {
             const fullAddress = `${contact.address.street}, ${contact.address.number}, ${contact.address.complement ?? ''} ${contact.address.neighborhood} - ${contact.address.city} - ${contact.address.state}`
             const isLast = i + 1 === contacts.length
             return (
@@ -67,6 +73,8 @@ export default function ContactList({ contacts }: Readonly<{ contacts: Contact[]
           })}
         </List>
       </Box>
+      )}
+
     </Grid>
   )
 }
