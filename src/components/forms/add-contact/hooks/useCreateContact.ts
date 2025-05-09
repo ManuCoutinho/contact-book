@@ -1,22 +1,32 @@
 import { useCallback, useState } from 'react'
 import { type SubmitHandler, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { searchAddress, getGeoLocation } from '@/services'
+import { searchAddress, getGeoLocation, createContact } from '@/services'
 import { type ContactForm, contactSchema } from '../schema'
+import setUrlParams from '@/utils/set-url-params'
 
 export function useCreateContact() {
+  const [toast, setToast] = useState({
+    open: false,
+    message: '',
+    severity: ''
+  })
   const {
     control,
     register,
     setError,
     setValue,
     clearErrors,
+    reset,
     handleSubmit,
     formState: { errors, isSubmitting }
   } = useForm<ContactForm>({
     resolver: yupResolver(contactSchema),
     mode: 'onBlur',
-    criteriaMode: 'firstError'
+    criteriaMode: 'firstError',
+    defaultValues: {
+      complement: ''
+    }
   })
   const [location, setLocation] = useState<string | null>(null)
   const hasError = Object.keys(errors).length > 0
@@ -47,6 +57,7 @@ export function useCreateContact() {
                   const fullAddress = `${address.logradouro}, ${address.bairro}, ${address.localidade} - ${address.uf}, Brasil`;
                   const location = await getGeoLocation(fullAddress)
                   console.log('📍', location)
+                  setUrlParams([{ key: 'location', value: location }])
                   setLocation(location)
                 }
               }
@@ -61,9 +72,24 @@ export function useCreateContact() {
   )
 
   const onCreateContact: SubmitHandler<ContactForm> = async (data) => {
-    console.log('🦩', data)
-  }
 
+    if (location) {
+      createContact(data, location, '1')
+        .then(() => {
+          reset()
+          setToast({ message: 'Contato criado com sucesso!', open: true, severity: 'success' })
+          setTimeout(() => setUrlParams([{ key: 'mode', value: 'view' }]), 4500)
+
+        })
+        .catch(() => {
+          setToast({ message: 'Ocorreu um error ao criar o contato', open: true, severity: 'error' })
+        })
+    }
+
+  }
+  function handleCloseToast() {
+    setToast((prev) => ({ ...prev, message: '', open: false }))
+  }
   const onSubmit = handleSubmit(onCreateContact)
   return {
     register,
@@ -73,6 +99,8 @@ export function useCreateContact() {
     hasError,
     isDisabled,
     cepCallback,
-    onSubmit
+    onSubmit,
+    toast,
+    handleCloseToast
   }
 }

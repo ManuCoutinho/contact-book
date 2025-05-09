@@ -1,18 +1,18 @@
 'use client'
 
 import {
-  Box,
   Button,
   IconButton,
   Modal,
   Stack,
   TextField,
   Typography,
-  Snackbar
+  Paper
 } from '@mui/material'
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
 import { style } from './styles'
 import { useSingup } from './hooks/useSingup'
+import Toast from '@/components/toast'
 
 export default function SingupForm() {
   const {
@@ -29,22 +29,22 @@ export default function SingupForm() {
   } = useSingup()
   return (
     <>
-      <Button color='secondary' onClick={() => setOpen(true)} sx={{ color: '#64748b' }}>
+      <Button
+        color='secondary'
+        onClick={() => setOpen(true)}
+        sx={{ color: '#64748b' }}
+      >
         Registrar
       </Button>
-      <Snackbar
-        open={toast.open}
-        autoHideDuration={4000}
-        onClose={handleCloseToast}
-        message={toast.message}
-      />
+      <Toast {...toast} handleClose={handleCloseToast} />
+
       <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby='modal-create-account'
         aria-describedby='create user account'
       >
-        <Box
+        <Paper
           component='form'
           sx={style}
           onSubmit={onCreateUser}
@@ -101,7 +101,7 @@ export default function SingupForm() {
               Você tem uma conta? Faça o login
             </Button>
           </Stack>
-        </Box>
+        </Paper>
       </Modal>
     </>
   )

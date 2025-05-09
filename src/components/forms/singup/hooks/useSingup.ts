@@ -9,7 +9,8 @@ export function useSingup() {
   const [open, setOpen] = useState(false)
   const [toast, setToast] = useState({
     open: false,
-    message: ''
+    message: '',
+    severity: ''
   })
   const {
     register,
@@ -30,11 +31,11 @@ export function useSingup() {
       email: data.email.trim()
     })
       .then(() => {
-        setToast({ message: 'Usuário criado com sucesso!', open: true })
+        setToast({ message: 'Usuário criado com sucesso!', open: true, severity: 'success' })
         handleClose()
       })
       .catch(() => {
-        setToast({ message: 'Ocorreu um error ao criar o usuário', open: true })
+        setToast({ message: 'Ocorreu um error ao criar o usuário', open: true, severity: 'error' })
       })
   }
 
@@ -50,7 +51,7 @@ export function useSingup() {
 
   const onCreateUser = handleSubmit(onSubmit)
   function handleCloseToast() {
-    setToast({ message: '', open: false })
+    setToast({ message: '', open: false, severity: '' })
   }
   return {
     onCreateUser,

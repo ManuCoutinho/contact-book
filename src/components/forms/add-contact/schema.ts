@@ -26,7 +26,6 @@ export const contactSchema = yup.object().shape({
     .required(requiredMessage)
     .nonNullable(requiredMessage)
     .test('phone', invalidFormatMessage, (value) => phoneIsValid(value)),
-  complement: yup.string().nullable().notRequired(),
   cpf: yup
     .string()
     .min(11, invalidFormatMessage)
@@ -61,18 +60,18 @@ export const contactSchema = yup.object().shape({
     .nonNullable(requiredMessage)
 })
 
-// export type ContactForm = {
-//   name: string
-//   phone: string
-//   cpf: string
-//   cep: string
-//   country: string
-//   street: string
-//   neighborhood: string
-//   city: string
-//   state: string
-//   number: string
-//   complement: yup.Maybe<string | null | undefined>
-// }
+export type ContactForm = {
+  name: string
+  phone: string
+  cpf: string
+  cep: string
+  country: string
+  street: string
+  neighborhood: string
+  city: string
+  state: string
+  number: string
+  complement?: yup.Maybe<string | undefined>
+}
 
-export type ContactForm = yup.InferType<typeof contactSchema>
+//export type ContactForm = yup.InferType<typeof contactSchema>

@@ -4,6 +4,8 @@ import { Controller } from 'react-hook-form'
 import { useCreateContact } from './hooks/useCreateContact'
 import setUrlParams from '@/utils/set-url-params'
 import cepMask from '@/utils/cep-mask'
+import Toast from '@/components/toast'
+import deleteUrlParam from '@/utils/delete-url-param'
 
 export default function AddContactForm() {
   const {
@@ -13,9 +15,12 @@ export default function AddContactForm() {
     isDisabled,
     isSubmitting,
     cepCallback,
-    onSubmit
+    onSubmit,
+    handleCloseToast,
+    toast
   } = useCreateContact()
   function handleUpdateMode() {
+    deleteUrlParam(['location'])
     setUrlParams([{ key: 'mode', value: 'view' }])
   }
   return (
@@ -28,6 +33,7 @@ export default function AddContactForm() {
       method='POST'
       onSubmit={onSubmit}
     >
+      <Toast {...toast} handleClose={handleCloseToast} />
       <Typography variant='h6'>Adicionar novo contato</Typography>
       <TextField
         {...register('name')}
@@ -65,7 +71,6 @@ export default function AddContactForm() {
             field: { onChange, value, ...rest }
           }) => (
             <TextField
-              autoFocus
               onChange={(e) => {
                 cepCallback(e.target.value)
                 onChange(e)

@@ -7,7 +7,7 @@ export default async function getGeoLocation(address: string) {
   const geocodeRes = await fetch(
     `${process.env.MAPBOX_URL}/${encodeURIComponent(
       address
-    )}.json?access_token=${process.env.MAPBOX_KEY}`, {
+    )}.json?access_token=${process.env.NEXT_PUBLIC_MAPBOX_KEY}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

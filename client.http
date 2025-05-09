@@ -1,0 +1,35 @@
+##
+GET http://localhost:3000/api/contacts
+content-type: application/json
+userId: 1
+
+###
+POST http://localhost:3000/api/contacts
+content-type: application/json
+
+{
+    "name": "Cláudia Cristiane Almada",
+    "cpf": "311.799.622-22",
+    "phone": "(79) 2917-1859",
+    "street": "Travessa Angélica Fonseca Santos",
+    "complement": "casa 2",
+    "neighborhood": "Getúlio Vargas",
+    "number": "4",
+    "city": "Aracaju",
+    "state": "Sergipe",
+    "country": "Brasil",
+    "cep": "49055-640",
+    "location": "-10.9075452C,-37.05962",
+    "userId": 1
+}
+
+###
+POST http://localhost:3000/api/register
+content-type: application/json
+
+{ 
+  "email": "",
+  "password": ""
+}
+
+

@@ -12,27 +12,23 @@ export default async function onCreateContact(body: ContactForm, location: strin
   const res = await fetch(`${process.env.API_URL}/contacts`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
-      'userId': user
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify({
       ...body,
-      location: location
+      location: location,
+      userId: user
     })
   })
+
+  if (res.ok) {
+    const data = await res.json()
+    return data
+  }
 
   if (!res.ok) {
     const error = await res.json()
     throw new ApiException(error.message, res.status)
   }
-  const data = await res.json()
-  return data
-}
 
-//todo: validação de body
-//todo: criação de login
-//todo: inclusão de auth header
-//todo: GET com  filtro
-//todo: PUT AND DELETE
-//todo: criação logout
-//todo: exclusão da pópria conta
+}
