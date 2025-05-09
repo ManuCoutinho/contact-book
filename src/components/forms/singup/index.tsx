@@ -29,7 +29,7 @@ export default function SingupForm() {
   } = useSingup()
   return (
     <>
-      <Button color='secondary' onClick={() => setOpen(true)}>
+      <Button color='secondary' onClick={() => setOpen(true)} sx={{ color: '#64748b' }}>
         Registrar
       </Button>
       <Snackbar

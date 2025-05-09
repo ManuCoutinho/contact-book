@@ -1,3 +1,4 @@
 import SingupForm from './singup'
+import AddContactForm from './add-contact'
 
-export { SingupForm }
+export { SingupForm, AddContactForm }

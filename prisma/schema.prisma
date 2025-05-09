@@ -16,3 +16,28 @@ model User {
   password   String
   created_at DateTime @default(now())
 }
+
+model Address {
+  id         Int      @id @default(autoincrement())
+  street     String
+  number     String
+  city       String
+  state      String
+  country    String
+  zip        String
+  complement String?
+  created_at DateTime @default(now())
+  location String
+
+  Contact Contact?
+}
+
+model Contact {
+  id         Int      @id @default(autoincrement())
+  cpf        String   @unique
+  name       String
+  phone      String
+  created_at DateTime @default(now())
+  addressId  Int      @unique
+  address    Address  @relation(fields: [addressId], references: [id])
+}
