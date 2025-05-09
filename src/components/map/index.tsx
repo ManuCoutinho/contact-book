@@ -13,8 +13,6 @@ export default function Map() {
   const { location } = useGeolocation()
 
   useEffect(() => {
-
-
     map.current = new mapboxgl.Map({
       container: mapContainer.current!,
       style: 'mapbox://styles/mapbox/streets-v11',
@@ -27,11 +25,13 @@ export default function Map() {
 
   }, [location]);
 
+
   return (
     <Grid size={7} sx={{ flexGrow: 1 }} >
       <Typography component='h4' variant='overline' fontSize='large'>Localização</Typography>
       <div className="rounded border border-zinc-300" ref={mapContainer} style={{ width: '100%', minHeight: '400px', flexGrow: 1, display: 'flex' }} />
     </Grid>
 
-  )
+    )
+
 }

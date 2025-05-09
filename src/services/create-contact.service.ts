@@ -2,6 +2,7 @@
 
 import { ContactForm } from "@/components/forms/add-contact/schema";
 import { ApiException } from "@/utils";
+import { revalidateTag } from "next/cache";
 
 export default async function onCreateContact(body: ContactForm, location: string, user: string) {
 
@@ -22,6 +23,7 @@ export default async function onCreateContact(body: ContactForm, location: strin
   })
 
   if (res.ok) {
+    revalidateTag('get-contacts')
     const data = await res.json()
     return data
   }

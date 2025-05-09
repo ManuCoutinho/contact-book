@@ -8,9 +8,11 @@ import phoneMask from '@/utils/phone-mask'
 import cpfMask from '@/utils/cpf-mask'
 import { ActionsMenu } from './actions.menu'
 import type { Contact } from '@/types'
+import { useContact } from '@/hooks/useContact'
 
 export default function ContactList({ contacts }: Readonly<{ contacts: Contact[] }>) {
   const { setGeolocation } = useGeolocation()
+  const { contact: store } = useContact()
   function handleCreateContact() {
     setUrlParams([{ key: 'mode', value: 'create' }])
   }
@@ -44,12 +46,12 @@ export default function ContactList({ contacts }: Readonly<{ contacts: Contact[]
             return (
               <Fragment key={contact.id}>
                 <ListItem disablePadding>
-                  <ListItemButton onClick={() => setGeolocation(contact.address.location)}>
+                  <ListItemButton selected={contact.id === store?.id} onClick={() => setGeolocation(contact.address.location)}>
                     <ListItemText
-                      primary={`${contact.name} (${cpfMask(contact.cpf)})`}
+                      primary={contact.name}
                       secondary={
                         <span className='flex flex-col gap-1'>
-                          <Typography component='span' fontSize='small'>{contact.user.email} - Tel: {phoneMask(contact.phone)}</Typography>
+                          <Typography component='span' fontSize='small'>CPF: {cpfMask(contact.cpf)} - Tel: {phoneMask(contact.phone)}</Typography>
                           <Typography component='span' fontSize='small'>{fullAddress}</Typography>
                         </span>
                       }

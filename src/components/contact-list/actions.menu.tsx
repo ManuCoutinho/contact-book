@@ -6,9 +6,12 @@ import { useContact } from '@/hooks/useContact'
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded'
 import setUrlParams from '@/utils/set-url-params'
 import type { Contact } from '@/types'
+import { useDeleteContact } from './hooks/useDeleteContact'
+import Toast from '../toast'
 
 export function ActionsMenu({ item }: { item: Contact }) {
   const { setContact } = useContact()
+  const { onDeleteContact, toast, handleCloseToast } = useDeleteContact()
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
 
@@ -29,8 +32,11 @@ export function ActionsMenu({ item }: { item: Contact }) {
     handleClose()
   }
 
+
+
   return (
     <div>
+      <Toast {...toast} handleClose={handleCloseToast} />
       <IconButton
         aria-label='more'
         id='long-button'
@@ -62,7 +68,10 @@ export function ActionsMenu({ item }: { item: Contact }) {
         </MenuItem>
         <MenuItem
           className='flex items-center gap-1.5'
-          onClick={(e) => console.log('🚨', e)}
+          onClick={() => {
+            onDeleteContact(item.id, item.user.id)
+            handleClose()
+          }}
         >
           <DeleteForeverRoundedIcon fontSize='small' /> Deletar
         </MenuItem>

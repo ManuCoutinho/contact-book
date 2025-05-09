@@ -7,6 +7,7 @@ import cepMask from '@/utils/cep-mask'
 import Toast from '@/components/toast'
 import deleteUrlParam from '@/utils/delete-url-param'
 import { useContact } from '@/hooks/useContact'
+import { useSearchParams } from 'next/navigation'
 
 export default function AddContactForm() {
   const { setContact } = useContact()
@@ -21,6 +22,8 @@ export default function AddContactForm() {
     handleCloseToast,
     toast
   } = useCreateContact()
+  const params = useSearchParams()
+  const mode = params.get('mode')
   function handleUpdateMode() {
     setContact(null)
     deleteUrlParam(['location'])
@@ -172,7 +175,7 @@ export default function AddContactForm() {
           disabled={isDisabled}
           loading={isSubmitting}
         >
-          Criar
+          {mode === 'create' ? 'Criar' : 'Salvar'}
         </Button>
         <Button onClick={handleUpdateMode} disabled={isSubmitting}>
           Cancelar

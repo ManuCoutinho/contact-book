@@ -4,6 +4,7 @@ import getGeoLocation from './get-location.service'
 import createContact from './create-contact.service'
 import getContacts from './get-contacts.service'
 import updateContact from './update-contact.service'
+import deleteContact from './remove-contact.service'
 
 export {
   registerUser,
@@ -11,5 +12,6 @@ export {
   getGeoLocation,
   createContact,
   getContacts,
-  updateContact
+  updateContact,
+  deleteContact
 }

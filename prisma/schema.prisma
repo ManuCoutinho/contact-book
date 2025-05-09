@@ -30,7 +30,7 @@ model Contact {
   user       User      @relation(fields: [userId], references: [id])
 
   addressId  Int       @unique
-  address    Address   @relation(fields: [addressId], references: [id])
+  address    Address   @relation(fields: [addressId], references: [id], onDelete: Cascade)
 }
 
 model Address {

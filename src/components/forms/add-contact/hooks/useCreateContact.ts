@@ -10,6 +10,7 @@ import {
 } from '@/services'
 import { type ContactForm, contactSchema } from '../schema'
 import setUrlParams from '@/utils/set-url-params'
+import deleteUrlParam from '@/utils/delete-url-param'
 
 export function useCreateContact() {
   const { contact } = useContact()
@@ -80,7 +81,7 @@ export function useCreateContact() {
                   setValue('complement', address.complemento)
                   const fullAddress = `${address.logradouro}, ${address.bairro}, ${address.localidade} - ${address.uf}, Brasil`
                   const location = await getGeoLocation(fullAddress)
-                  console.log('📍', location)
+
                   setUrlParams([{ key: 'location', value: location }])
                   setLocation(location)
                 }
@@ -127,7 +128,10 @@ export function useCreateContact() {
             severity: 'success'
           })
           setTimeout(
-            () => setUrlParams([{ key: 'mode', value: 'view' }]),
+            () => {
+              deleteUrlParam(['contact'])
+              setUrlParams([{ key: 'mode', value: 'view' }])
+            },
             4500
           )
         })

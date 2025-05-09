@@ -14,6 +14,12 @@ export default function HomeView({ data }: Readonly<{ data: Contact[] }>) {
   const searchParams = useSearchParams()
   const mode = searchParams.get('mode')
 
+  const modeSelection = {
+    view: <Map />,
+    edit: <AddContactForm />,
+    create: <AddContactForm />
+  }
+
   return (
     <Container maxWidth='xl' className='p-6 flex flex-col gap-6'>
       <Stack direction='row' spacing={4} alignItems='center' alignSelf='flex-end'>
@@ -33,7 +39,7 @@ export default function HomeView({ data }: Readonly<{ data: Contact[] }>) {
             <Grid container spacing={4}>
               <ContactList contacts={data} />
               <Divider orientation='vertical' flexItem />
-              {mode === 'view' ? <Map /> : <AddContactForm />}
+              {modeSelection[mode as keyof typeof modeSelection ?? 'view']}
             </Grid>
           </Card>
         </GeoLocationProvider>
