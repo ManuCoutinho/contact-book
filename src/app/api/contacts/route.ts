@@ -39,11 +39,12 @@ export async function POST(request: Request) {
         user: true
       }
     })
-    prisma.$disconnect()
+
     return new NextResponse(JSON.stringify(`Contact created`), { status: 201 })
   } catch (error) {
-    console.error('🚨', error)
     return new NextResponse(JSON.stringify(error), { status: 500 })
+  } finally {
+    prisma.$disconnect()
   }
 }
 

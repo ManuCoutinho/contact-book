@@ -6,8 +6,10 @@ import setUrlParams from '@/utils/set-url-params'
 import cepMask from '@/utils/cep-mask'
 import Toast from '@/components/toast'
 import deleteUrlParam from '@/utils/delete-url-param'
+import { useContact } from '@/hooks/useContact'
 
 export default function AddContactForm() {
+  const { setContact } = useContact()
   const {
     control,
     register,
@@ -20,6 +22,7 @@ export default function AddContactForm() {
     toast
   } = useCreateContact()
   function handleUpdateMode() {
+    setContact(null)
     deleteUrlParam(['location'])
     setUrlParams([{ key: 'mode', value: 'view' }])
   }

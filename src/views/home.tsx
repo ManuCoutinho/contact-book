@@ -6,6 +6,7 @@ import { useSearchParams } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import type { Contact } from '@/types';
 import { GeoLocationProvider } from '@/contexts/geolocation.context';
+import { ContactProvider } from '@/contexts/contact.context';
 
 const Map = dynamic(() => import('@/components/map'), { ssr: false });
 
@@ -26,15 +27,17 @@ export default function HomeView({ data }: Readonly<{ data: Contact[] }>) {
         </span>
         <Typography component='h3' variant='subtitle2'>Guarde e gerencie sua lista de contatos</Typography>
       </div>
-      <GeoLocationProvider>
-        <Card className='p-6 min-h-[500px] size-full' elevation={4}>
-          <Grid container spacing={4}>
-            <ContactList contacts={data} />
-            <Divider orientation='vertical' flexItem />
-            {mode === 'create' ? <AddContactForm /> : <Map />}
-          </Grid>
-        </Card>
-      </GeoLocationProvider>
+      <ContactProvider>
+        <GeoLocationProvider>
+          <Card className='p-6 min-h-[500px] size-full' elevation={4}>
+            <Grid container spacing={4}>
+              <ContactList contacts={data} />
+              <Divider orientation='vertical' flexItem />
+              {mode === 'view' ? <Map /> : <AddContactForm />}
+            </Grid>
+          </Card>
+        </GeoLocationProvider>
+      </ContactProvider>
     </Container>
   )
 }

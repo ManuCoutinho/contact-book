@@ -2,11 +2,12 @@
 import { Fragment } from 'react'
 import { Box, Button, Divider, Grid, List, ListItem, ListItemText, ListItemButton, Stack, Typography } from '@mui/material'
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded'
+import { useGeolocation } from '@/hooks/useGeolocation'
 import setUrlParams from '@/utils/set-url-params'
 import phoneMask from '@/utils/phone-mask'
 import cpfMask from '@/utils/cpf-mask'
+import { ActionsMenu } from './actions.menu'
 import type { Contact } from '@/types'
-import { useGeolocation } from '@/hooks/useGeolocation'
 
 export default function ContactList({ contacts }: Readonly<{ contacts: Contact[] }>) {
   const { setGeolocation } = useGeolocation()
@@ -38,7 +39,7 @@ export default function ContactList({ contacts }: Readonly<{ contacts: Contact[]
       <Box sx={{ height: '100%' }}>
         <List dense>
           {contacts.map((contact, i) => {
-            const fullAddress = `${contact.address.street}, ${contact.address.number}, ${contact.address.neighborhood} - ${contact.address.city} - ${contact.address.state}`
+            const fullAddress = `${contact.address.street}, ${contact.address.number}, ${contact.address.complement ?? ''} ${contact.address.neighborhood} - ${contact.address.city} - ${contact.address.state}`
             const isLast = i + 1 === contacts.length
             return (
               <Fragment key={contact.id}>
@@ -54,6 +55,7 @@ export default function ContactList({ contacts }: Readonly<{ contacts: Contact[]
                       }
                     />
                   </ListItemButton>
+                  <ActionsMenu item={contact} />
                 </ListItem>
                 {
                   !isLast ? <Divider component="li" /> : null
