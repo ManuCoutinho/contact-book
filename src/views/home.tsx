@@ -1,8 +1,11 @@
 'use client'
 import { Button, Card, Container, Divider, Grid, Stack, Typography } from '@mui/material'
 import MenuBookTwoToneIcon from '@mui/icons-material/MenuBookTwoTone';
-import { Map, ContactList, SingupForm, AddContactForm } from '@/components'
+import { ContactList, SingupForm, AddContactForm } from '@/components'
 import { useSearchParams } from 'next/navigation';
+import dynamic from 'next/dynamic';
+
+const Map = dynamic(() => import('@/components/map'), { ssr: false });
 
 export default function HomeView() {
   const searchParams = useSearchParams()
@@ -24,7 +27,7 @@ export default function HomeView() {
         <Grid container spacing={4}>
           <ContactList />
           <Divider orientation='vertical' flexItem />
-          {mode === 'create' ? <AddContactForm /> : <Map />}
+          {mode === 'create' ? <AddContactForm /> : <Map lat={-25.410983} lng={-49.205716} />}
         </Grid>
       </Card>
     </Container>

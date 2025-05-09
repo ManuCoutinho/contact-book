@@ -46,6 +46,7 @@ export function useCreateContact() {
                   setValue('complement', address.complemento)
                   const fullAddress = `${address.logradouro}, ${address.bairro}, ${address.localidade} - ${address.uf}, Brasil`;
                   const location = await getGeoLocation(fullAddress)
+                  console.log('📍', location)
                   setLocation(location)
                 }
               }

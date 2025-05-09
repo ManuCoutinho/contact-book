@@ -1,20 +1,36 @@
+'use client'
+import { useRef, useEffect } from "react";
+import mapboxgl from 'mapbox-gl';
 import { Grid, Typography } from "@mui/material";
+import 'mapbox-gl/dist/mapbox-gl.css';
 
-export default function Map() {
+export default function Map({ lat, lng }: Readonly<{ lat: number; lng: number }>) {
+  mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_KEY
+  const mapContainer = useRef<HTMLDivElement>(null);
+  const map = useRef<mapboxgl.Map | null>(null);
+
+  useEffect(() => {
+    if (map.current) return;
+
+    map.current = new mapboxgl.Map({
+      container: mapContainer.current!,
+      style: 'mapbox://styles/mapbox/streets-v12',
+      center: [lng, lat],
+      zoom: 15,
+
+    });
+
+    new mapboxgl.Marker().setLngLat([lng, lat]).addTo(map.current);
+    // return() => map.current.re];
+  }, [lat, lng]);
+
+
+
   return (
     <Grid size={7} className="size-full">
       <Typography component='h4' variant='overline' fontSize='large'>Localização</Typography>
-      <iframe
-        aria-label='google map'
-        allowFullScreen
-        style={{ border: 0 }}
-        referrerPolicy="no-referrer-when-downgrade"
-        src="https://maps.google.com/maps?Rua+Adilio+Ramos,+1391+-+Bairro+Alto,+Curitiba+PR,+82840-140&z=15&output=embed&language=pt"
-        className="size-full mt-3"
-      />
+      <div className="rounded border border-zinc-300" ref={mapContainer} style={{ width: '100%', minHeight: '400px' }} />
     </Grid>
 
   )
 }
-// src="//maps.google.com/maps?q=53.3381768,-6.2613077&z=15&output=embed"
-//"https://www.google.com/maps/embed/v1/place?q=53.3381768,-6.2613077&zoom=15&language=pt"
