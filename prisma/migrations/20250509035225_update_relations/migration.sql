@@ -1,0 +1,27 @@
+/*
+  Warnings:
+
+  - Added the required column `userId` to the `Contact` table without a default value. This is not possible if the table is not empty.
+
+*/
+-- RedefineTables
+PRAGMA defer_foreign_keys=ON;
+PRAGMA foreign_keys=OFF;
+CREATE TABLE "new_Contact" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "cpf" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "phone" TEXT NOT NULL,
+    "created_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "userId" INTEGER NOT NULL,
+    "addressId" INTEGER NOT NULL,
+    CONSTRAINT "Contact_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT "Contact_addressId_fkey" FOREIGN KEY ("addressId") REFERENCES "Address" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+);
+INSERT INTO "new_Contact" ("addressId", "cpf", "created_at", "id", "name", "phone") SELECT "addressId", "cpf", "created_at", "id", "name", "phone" FROM "Contact";
+DROP TABLE "Contact";
+ALTER TABLE "new_Contact" RENAME TO "Contact";
+CREATE UNIQUE INDEX "Contact_cpf_key" ON "Contact"("cpf");
+CREATE UNIQUE INDEX "Contact_addressId_key" ON "Contact"("addressId");
+PRAGMA foreign_keys=ON;
+PRAGMA defer_foreign_keys=OFF;

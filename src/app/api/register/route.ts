@@ -28,7 +28,7 @@ export async function POST(request: Request) {
         password: pswHash,
       }
     })
-
+    prisma.$disconnect()
     return new NextResponse(JSON.stringify({
       email: user.email,
       id: user.id,
