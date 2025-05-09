@@ -11,30 +11,31 @@ datasource db {
 }
 
 model User {
-  id         Int       @id @default(autoincrement())
-  email      String    @unique
+  id         Int      @id @default(autoincrement())
+  email      String   @unique
   password   String
-  created_at DateTime  @default(now())
+  created_at DateTime @default(now())
+  active     Boolean @default(true)
 
-  contacts   Contact[] // Um usuário pode ter vários contatos
+  contacts Contact[] // Um usuário pode ter vários contatos
 }
 
 model Contact {
-  id         Int       @id @default(autoincrement())
-  cpf        String    @unique
+  id         Int      @id @default(autoincrement())
+  cpf        String   @unique
   name       String
   phone      String
-  created_at DateTime  @default(now())
+  created_at DateTime @default(now())
 
-  userId     Int
-  user       User      @relation(fields: [userId], references: [id])
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  addressId  Int       @unique
-  address    Address   @relation(fields: [addressId], references: [id], onDelete: Cascade)
+  addressId Int     @unique
+  address   Address @relation(fields: [addressId], references: [id], onDelete: Cascade)
 }
 
 model Address {
-  id           Int       @id @default(autoincrement())
+  id           Int      @id @default(autoincrement())
   street       String
   number       String
   city         String
@@ -44,7 +45,7 @@ model Address {
   neighborhood String
   complement   String?
   location     String
-  created_at   DateTime  @default(now())
+  created_at   DateTime @default(now())
 
-  contact      Contact?  
+  contact Contact?
 }

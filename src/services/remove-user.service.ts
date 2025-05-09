@@ -2,23 +2,21 @@
 
 import { session } from "@/lib/session";
 import { ApiException } from "@/utils";
-import { revalidateTag } from "next/cache";
 
-export default async function onDeleteContact(contactId: number) {
+export default async function onDeleteUserAccount() {
   const auth = await session()
   const token = auth?.user?.accessToken
-  if (!contactId) throw new ApiException('Missing [contactId]', 400)
-  if (!token) throw new ApiException('Missing valid token', 401)
 
-  const res = await fetch(`${process.env.API_URL}/contact/${contactId}`, {
-    method: 'DELETE',
+  if (!token) throw new ApiException('User not authorized', 401)
+
+  const res = await fetch(`${process.env.API_URL}/delete-account`, {
+    method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`
     }
   })
   if (res.ok) {
-    revalidateTag('get-contacts')
     return
   }
 

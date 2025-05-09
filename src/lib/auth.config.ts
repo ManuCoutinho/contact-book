@@ -19,28 +19,38 @@ export const config = {
         }
       },
       async authorize(credentials) {
-        const user = await signIn(credentials.email as string, credentials.password as string)
+        let user = null
+        user = await signIn(
+          credentials.email as string,
+          credentials.password as string
+        )
 
-        if (!user) throw new Error("Invalid credentials.")
+        if (!user) throw new Error('Invalid credentials.')
 
-        return user ?? null
+        return user
       }
     })
   ],
   // this is required
   secret: process.env.AUTH_SECRET,
   pages: {
-    signIn: '/login',
-    signOut: '/logout'
+    signIn: '/',
+    signOut: '/',
+    error: '/'  
   },
   session: { strategy: 'jwt' },
   callbacks: {
     async jwt({ token, user }) {
-
       if (user) {
         token.userId = user.id
         token.email = user.email
         token.accessToken = user.token
+      }
+
+      if (token.error) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { refreshToken, ...rest } = token
+        return rest
       }
 
       return token

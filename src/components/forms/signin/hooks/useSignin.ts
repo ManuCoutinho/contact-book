@@ -1,11 +1,14 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { useSearchParams } from 'next/navigation'
 import { signIn } from 'next-auth/react'
 import { type LoginForm, loginSchema } from '../schema'
 
 export function useSingin() {
+  const searchParams = useSearchParams()
+  const errorUrl = searchParams.get('error')
   const [open, setOpen] = useState(false)
   const [toast, setToast] = useState({
     open: false,
@@ -26,14 +29,19 @@ export function useSingin() {
 
   const onSubmit: SubmitHandler<LoginForm> = async (data) => {
     await signIn('credentials', {
-      ...data
+      ...data,
+      redirectTo: '/'
     }).catch(() => {
       setToast({ message: 'Credenciais inválidas!', open: true, severity: 'error' })
     })
-
-
   }
 
+  useEffect(() => {
+
+    if (errorUrl) {
+      setToast({ message: 'Credenciais inválidas!', open: true, severity: 'error' })
+    }
+  }, [errorUrl])
 
   function handleClose() {
     clearErrors()

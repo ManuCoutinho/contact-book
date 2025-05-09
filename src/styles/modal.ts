@@ -1,6 +1,6 @@
 import type { SxProps } from "@mui/material";
 
-export const style = {
+export const modalStyle = {
   position: 'absolute',
   top: '50%',
   left: '50%',

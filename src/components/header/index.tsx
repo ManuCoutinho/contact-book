@@ -5,7 +5,7 @@ import { Stack, IconButton, MenuItem, Menu } from "@mui/material";
 import { SinginForm, SingupForm } from '@/components/forms';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import Face2RoundedIcon from '@mui/icons-material/Face2Rounded'
-
+import { AccountDeletion } from './account-deletion'
 
 export default function Header() {
   const { data: session } = useSession()
@@ -49,6 +49,7 @@ export default function Header() {
           onClose={handleClose}
           sx={{ width: '30ch' }}
         >
+          <AccountDeletion />
           <MenuItem className="w-full flex items-center gap-1" onClick={() => {
             signOut()
             handleClose()

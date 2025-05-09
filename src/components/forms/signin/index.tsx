@@ -10,9 +10,9 @@ import {
   Paper
 } from '@mui/material'
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
-import { style } from './styles'
 import { useSingin } from './hooks/useSignin'
 import Toast from '@/components/toast'
+import { modalStyle } from '@/styles/modal'
 
 export default function SinginForm() {
   const {
@@ -41,7 +41,7 @@ export default function SinginForm() {
       >
         <Paper
           component='form'
-          sx={style}
+          sx={modalStyle}
           onSubmit={onLogin}
           id='form-register-account'
           method='POST'

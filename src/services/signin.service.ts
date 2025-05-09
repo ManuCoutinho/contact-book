@@ -9,7 +9,7 @@ export default async function signIn(email: string, password: string) {
   try {
     const user = await prisma.user.findUnique({ where: { email } })
 
-    if (!user) return null
+    if (!user || !user.active) return null
 
     const passwordMatch = await comparePassword(password, user.password)
     if (!passwordMatch) return null

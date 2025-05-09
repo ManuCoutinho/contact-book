@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+import { jwtDecoder } from '@/utils'
 
 type Params = {
   params: {
@@ -71,12 +72,13 @@ export async function PUT(request: Request, { params }: Params) {
 
 export async function DELETE(request: Request, { params }: Params) {
   const contactId = Number((await params).id)
-  const userId = request.headers.get('userId') as string
-  console.log('**', userId)
 
-
+  const auth = request.headers.get('Authorization') as string
+  if (!auth) return new NextResponse('Unauthorized', { status: 401 })
+  const token = jwtDecoder<{ id: number; email: string }>(auth as string)
+  const userId = token?.id
   if (isNaN(contactId)) {
-    console.log('****')
+
     return new NextResponse(JSON.stringify('Invalid contact ID'), { status: 400 })
   }
 

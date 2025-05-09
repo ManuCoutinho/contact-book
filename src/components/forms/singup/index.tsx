@@ -10,9 +10,9 @@ import {
   Paper
 } from '@mui/material'
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
-import { style } from './styles'
 import { useSingup } from './hooks/useSingup'
 import Toast from '@/components/toast'
+import { modalStyle } from '@/styles/modal'
 
 export default function SingupForm() {
   const {
@@ -46,7 +46,7 @@ export default function SingupForm() {
       >
         <Paper
           component='form'
-          sx={style}
+          sx={modalStyle}
           onSubmit={onCreateUser}
           id='form-register-account'
           method='POST'
