@@ -9,8 +9,8 @@ export function useDeleteContact() {
     severity: ''
   })
 
-  const onDeleteContact = useCallback(async (id: number, userId: number) => {
-    deleteContact(userId, id)
+  const onDeleteContact = useCallback(async (id: number) => {
+    deleteContact(id)
       .then(() => {
         setToast({
           message: 'Contato removido com sucesso!',

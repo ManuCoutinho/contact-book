@@ -96,6 +96,7 @@ export async function DELETE(request: Request, { params }: Params) {
     if (!existingContact) {
       return new NextResponse(JSON.stringify('Contact not found'), { status: 404 })
     }
+
     if (existingContact.userId !== +userId) {
       return new NextResponse(JSON.stringify('Unauthorized: contact does not belong to user'), { status: 403 })
     }

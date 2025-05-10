@@ -69,7 +69,7 @@ export function ActionsMenu({ item }: { item: Contact }) {
         <MenuItem
           className='flex items-center gap-1.5'
           onClick={() => {
-            onDeleteContact(item.id, item.user.id)
+            onDeleteContact(item.id)
             handleClose()
           }}
         >
