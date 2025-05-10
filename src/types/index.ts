@@ -20,7 +20,6 @@ export interface UserAddress {
   location: string
 }
 
-
 export interface Contact {
   cpf: string
   id: number

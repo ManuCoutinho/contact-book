@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server"
+import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { jwtDecoder } from '@/utils'
 
@@ -19,7 +19,11 @@ export async function POST(request: Request) {
       data: {
         cpf: body.cpf.replaceAll('.', '').replace('-', '').trim(),
         name: body.name,
-        phone: body.phone.replace('(', '').replace('-', '').replace(')', '').trim(),
+        phone: body.phone
+          .replace('(', '')
+          .replace('-', '')
+          .replace(')', '')
+          .trim(),
         user: {
           connect: { id: +userId }
         },
@@ -56,7 +60,7 @@ export async function GET(request: Request) {
 
   if (!auth) return new NextResponse('Unauthorized', { status: 401 })
   const token = jwtDecoder<{ id: number; email: string }>(auth as string)
-  const userId = token?.id 
+  const userId = token?.id
 
   if (!userId) return new NextResponse('Missing required body', { status: 400 })
 
@@ -101,5 +105,3 @@ export async function GET(request: Request) {
     return new NextResponse(JSON.stringify(error), { status: 500 })
   }
 }
-
-

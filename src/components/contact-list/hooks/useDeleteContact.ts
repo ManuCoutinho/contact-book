@@ -1,8 +1,7 @@
-import { useCallback, useState } from "react"
+import { useCallback, useState } from 'react'
 import { deleteContact } from '@/services'
 
 export function useDeleteContact() {
-
   const [toast, setToast] = useState({
     open: false,
     message: '',
@@ -25,7 +24,6 @@ export function useDeleteContact() {
           severity: 'error'
         })
       })
-
   }, [])
   function handleCloseToast() {
     setToast((prev) => ({ ...prev, message: '', open: false }))

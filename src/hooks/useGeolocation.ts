@@ -1,5 +1,5 @@
-import { useContext } from "react"
-import { GeoLocationContext } from "@/contexts/geolocation.context"
+import { useContext } from 'react'
+import { GeoLocationContext } from '@/contexts/geolocation.context'
 
 export function useGeolocation() {
   const context = useContext(GeoLocationContext)

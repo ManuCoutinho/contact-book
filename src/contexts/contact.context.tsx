@@ -1,7 +1,6 @@
 'use client'
-import { createContext, useState } from "react";
-import type { Contact } from "@/types";
-
+import { createContext, useState } from 'react'
+import type { Contact } from '@/types'
 
 type ContactContextType = {
   contact: Contact | null
@@ -15,11 +14,10 @@ export const ContactContext = createContext<ContactContextType>({
 export function ContactProvider({ children }: { children: React.ReactNode }) {
   const [currentContact, setCurrentContact] = useState<Contact | null>(null)
 
-
-
-
   return (
-    <ContactContext.Provider value={{ contact: currentContact, setContact: setCurrentContact }}>
+    <ContactContext.Provider
+      value={{ contact: currentContact, setContact: setCurrentContact }}
+    >
       {children}
     </ContactContext.Provider>
   )

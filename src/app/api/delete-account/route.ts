@@ -1,12 +1,11 @@
-import { prisma } from "@/lib/prisma"
-import { jwtDecoder } from "@/utils"
-import { NextResponse } from "next/server"
-
-
+import { prisma } from '@/lib/prisma'
+import { jwtDecoder } from '@/utils'
+import { NextResponse } from 'next/server'
 
 export async function PATCH(request: Request) {
   const auth = request.headers.get('Authorization') as string
-  if (request.method !== 'PATCH') return new NextResponse('Method not allowed', { status: 45 })
+  if (request.method !== 'PATCH')
+    return new NextResponse('Method not allowed', { status: 45 })
 
   if (!auth) return new NextResponse('Unauthorized', { status: 401 })
 
@@ -14,11 +13,13 @@ export async function PATCH(request: Request) {
   const userId = token?.id
 
   if (!userId) {
-    return new NextResponse(JSON.stringify('Unauthorized: user do not have permission'), { status: 403 })
+    return new NextResponse(
+      JSON.stringify('Unauthorized: user do not have permission'),
+      { status: 403 }
+    )
   }
 
   try {
-
     await prisma.user.update({
       where: { id: +userId },
       data: {
@@ -29,7 +30,10 @@ export async function PATCH(request: Request) {
     return new NextResponse(null, { status: 204 })
   } catch (error) {
     console.error(error)
-    return new NextResponse(JSON.stringify({ error: 'Internal server error', details: error }), { status: 500 })
+    return new NextResponse(
+      JSON.stringify({ error: 'Internal server error', details: error }),
+      { status: 500 }
+    )
   } finally {
     prisma.$disconnect()
   }

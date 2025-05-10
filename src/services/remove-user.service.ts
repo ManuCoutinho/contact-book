@@ -1,7 +1,7 @@
 'use server'
 
-import { session } from "@/lib/session";
-import { ApiException } from "@/utils";
+import { session } from '@/lib/session'
+import { ApiException } from '@/utils'
 
 export default async function onDeleteUserAccount() {
   const auth = await session()
@@ -25,5 +25,4 @@ export default async function onDeleteUserAccount() {
 
     throw new ApiException(error.message, res.status)
   }
-
 }

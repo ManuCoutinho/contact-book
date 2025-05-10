@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server"
+import { NextResponse } from 'next/server'
 import { generateSaltHash } from '@/utils'
 import { prisma } from '@/lib/prisma'
 
@@ -17,7 +17,9 @@ export async function POST(request: Request) {
     })
 
     if (existingUser) {
-      return new NextResponse(JSON.stringify('Email already registered'), { status: 400 })
+      return new NextResponse(JSON.stringify('Email already registered'), {
+        status: 400
+      })
     }
 
     const pswHash = await generateSaltHash(body.password)
@@ -25,14 +27,17 @@ export async function POST(request: Request) {
     const user = await prisma.user.create({
       data: {
         email: body.email,
-        password: pswHash,
+        password: pswHash
       }
     })
     prisma.$disconnect()
-    return new NextResponse(JSON.stringify({
-      email: user.email,
-      id: user.id,
-    }), { status: 201 })
+    return new NextResponse(
+      JSON.stringify({
+        email: user.email,
+        id: user.id
+      }),
+      { status: 201 }
+    )
   } catch (error) {
     return new NextResponse(JSON.stringify(error), { status: 500 })
   }

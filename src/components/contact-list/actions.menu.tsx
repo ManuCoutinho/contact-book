@@ -32,8 +32,6 @@ export function ActionsMenu({ item }: { item: Contact }) {
     handleClose()
   }
 
-
-
   return (
     <div>
       <Toast {...toast} handleClose={handleCloseToast} />

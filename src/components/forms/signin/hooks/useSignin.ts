@@ -32,14 +32,21 @@ export function useSingin() {
       ...data,
       redirectTo: '/'
     }).catch(() => {
-      setToast({ message: 'Credenciais inválidas!', open: true, severity: 'error' })
+      setToast({
+        message: 'Credenciais inválidas!',
+        open: true,
+        severity: 'error'
+      })
     })
   }
 
   useEffect(() => {
-
     if (errorUrl) {
-      setToast({ message: 'Credenciais inválidas!', open: true, severity: 'error' })
+      setToast({
+        message: 'Credenciais inválidas!',
+        open: true,
+        severity: 'error'
+      })
     }
   }, [errorUrl])
 

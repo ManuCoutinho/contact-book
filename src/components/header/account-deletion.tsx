@@ -58,10 +58,11 @@ export function AccountDeletion() {
             </Typography>
             <div className='p-4 flex items-center w-full gap-4 justify-end mt-6'>
               <Button
-                onClick={() => start(() => {
-                  onDeleteUserAccount()
-                    .then(() => signOut())
-                })}
+                onClick={() =>
+                  start(() => {
+                    onDeleteUserAccount().then(() => signOut())
+                  })
+                }
                 loading={pending}
                 disabled={pending}
                 color='error'

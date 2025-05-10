@@ -15,11 +15,9 @@ export default async function signIn(email: string, password: string) {
     if (!passwordMatch) return null
 
     //24h valid
-    const token = jwt.sign(
-      { id: user.id, email: user.email },
-      JWT_SECRET,
-      { expiresIn: '1d' }
-    )
+    const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, {
+      expiresIn: '1d'
+    })
 
     return {
       id: user.id,

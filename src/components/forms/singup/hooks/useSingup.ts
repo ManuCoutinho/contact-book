@@ -25,20 +25,26 @@ export function useSingup() {
   })
 
   const onSubmit: SubmitHandler<RegisterForm> = async (data) => {
-
     registerUser({
       password: data.password.trim(),
       email: data.email.trim()
     })
       .then(() => {
-        setToast({ message: 'Usuário criado com sucesso!', open: true, severity: 'success' })
+        setToast({
+          message: 'Usuário criado com sucesso!',
+          open: true,
+          severity: 'success'
+        })
         handleClose()
       })
       .catch(() => {
-        setToast({ message: 'Ocorreu um error ao criar o usuário', open: true, severity: 'error' })
+        setToast({
+          message: 'Ocorreu um error ao criar o usuário',
+          open: true,
+          severity: 'error'
+        })
       })
   }
-
 
   function handleClose() {
     clearErrors()

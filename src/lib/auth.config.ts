@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+
 import NextAuth from 'next-auth'
 import type { NextAuthConfig } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
@@ -18,6 +20,7 @@ export const config = {
           type: 'password'
         }
       },
+      //@ts-ignore
       async authorize(credentials) {
         let user = null
         user = await signIn(
@@ -36,7 +39,7 @@ export const config = {
   pages: {
     signIn: '/',
     signOut: '/',
-    error: '/'  
+    error: '/'
   },
   session: { strategy: 'jwt' },
   callbacks: {
@@ -44,6 +47,7 @@ export const config = {
       if (user) {
         token.userId = user.id
         token.email = user.email
+        //@ts-ignore
         token.accessToken = user.token
       }
 

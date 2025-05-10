@@ -1,5 +1,5 @@
 import { Alert, Snackbar, type AlertColor } from '@mui/material'
-import Slide, { SlideProps } from '@mui/material/Slide';
+import Slide, { SlideProps } from '@mui/material/Slide'
 type ToastProps = {
   message: string
   open: boolean
@@ -14,7 +14,7 @@ export default function Toast({
   handleClose
 }: ToastProps) {
   function SlideTransition(props: SlideProps) {
-    return <Slide {...props} direction="up" />;
+    return <Slide {...props} direction='up' />
   }
   return (
     <Snackbar

@@ -93,7 +93,6 @@ export default function SingupForm() {
             <Button disabled={isDisabled} type='submit' loading={isSubmitting}>
               Registrar
             </Button>
-
           </Stack>
         </Paper>
       </Modal>

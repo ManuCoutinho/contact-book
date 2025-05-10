@@ -37,27 +37,15 @@ export const contactSchema = yup.object().shape({
     .required(requiredMessage)
     .min(8, invalidFormatMessage)
     .nonNullable(requiredMessage),
-  country: yup
-    .string()
-    .required(requiredMessage)
-    .nonNullable(requiredMessage),
-  street: yup
-    .string()
-    .required(requiredMessage)
-    .nonNullable(requiredMessage),
+  country: yup.string().required(requiredMessage).nonNullable(requiredMessage),
+  street: yup.string().required(requiredMessage).nonNullable(requiredMessage),
   neighborhood: yup
     .string()
     .required(requiredMessage)
     .nonNullable(requiredMessage),
   city: yup.string().required(requiredMessage).nonNullable(requiredMessage),
-  state: yup
-    .string()
-    .required(requiredMessage)
-    .nonNullable(requiredMessage),
-  number: yup
-    .string()
-    .required(requiredMessage)
-    .nonNullable(requiredMessage)
+  state: yup.string().required(requiredMessage).nonNullable(requiredMessage),
+  number: yup.string().required(requiredMessage).nonNullable(requiredMessage)
 })
 
 export type ContactForm = {

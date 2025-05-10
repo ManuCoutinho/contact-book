@@ -1,11 +1,14 @@
 'use server'
 
-import { ContactForm } from "@/components/forms/add-contact/schema";
-import { session } from "@/lib/session";
-import { ApiException } from "@/utils";
-import { revalidateTag } from "next/cache";
+import { ContactForm } from '@/components/forms/add-contact/schema'
+import { session } from '@/lib/session'
+import { ApiException } from '@/utils'
+import { revalidateTag } from 'next/cache'
 
-export default async function onCreateContact(body: ContactForm, location: string) {
+export default async function onCreateContact(
+  body: ContactForm,
+  location: string
+) {
   const auth = await session()
   if (!location) throw new ApiException('Missing location', 400)
   if (!body) throw new ApiException('Missing valid body', 400)
@@ -33,5 +36,4 @@ export default async function onCreateContact(body: ContactForm, location: strin
     const error = await res.json()
     throw new ApiException(error.message, res.status)
   }
-
 }

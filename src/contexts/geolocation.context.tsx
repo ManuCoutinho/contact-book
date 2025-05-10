@@ -1,18 +1,27 @@
 'use client'
-import { createContext, useCallback, useEffect, useState } from "react";
+import { createContext, useCallback, useEffect, useState } from 'react'
 import setUrlParams from '@/utils/set-url-params'
-import { useSearchParams } from "next/navigation";
+import { useSearchParams } from 'next/navigation'
 
-type Location = { lat: number, lng: number }
+type Location = { lat: number; lng: number }
 type GeolocationContextType = {
   location: Location
   setGeolocation: (loc: string) => void
 }
-export const GeoLocationContext = createContext<GeolocationContextType>({} as GeolocationContextType)
+export const GeoLocationContext = createContext<GeolocationContextType>(
+  {} as GeolocationContextType
+)
 
-export function GeoLocationProvider({ children }: { children: React.ReactNode }) {
+export function GeoLocationProvider({
+  children
+}: {
+  children: React.ReactNode
+}) {
   const searchParams = useSearchParams()
-  const [location, setLocation] = useState<Location>({ lat: -22.97241, lng: -43.186913 })
+  const [location, setLocation] = useState<Location>({
+    lat: -22.97241,
+    lng: -43.186913
+  })
   const locQuery = searchParams.get('location')
   const setGeolocation = useCallback((loc: string) => {
     if (loc) {

@@ -29,8 +29,9 @@ export default function SinginForm() {
   } = useSingin()
   return (
     <>
-
-      <Button onClick={() => setOpen(true)} color='primary'>entrar</Button>
+      <Button onClick={() => setOpen(true)} color='primary'>
+        entrar
+      </Button>
       <Toast {...toast} handleClose={handleCloseToast} />
 
       <Modal

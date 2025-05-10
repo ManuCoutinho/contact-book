@@ -1,4 +1,4 @@
-import type { SxProps } from "@mui/material";
+import type { SxProps } from '@mui/material'
 
 export const modalStyle = {
   position: 'absolute',

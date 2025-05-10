@@ -1,6 +1,6 @@
 'use server'
-import type { Address } from "@/types"
-import { ApiException } from "@/utils"
+import type { Address } from '@/types'
+import { ApiException } from '@/utils'
 
 /**
  * @description searching service in viacep API
@@ -18,13 +18,12 @@ export default async function searchAddress(arg: string) {
         Accept: 'application/json'
       }
     })
-    if (res.status === 400) throw new ApiException('Error in CEP api search ', res.status)
+    if (res.status === 400)
+      throw new ApiException('Error in CEP api search ', res.status)
     const data = await res.json()
     if (data.erro) {
       throw new ApiException('Error in CEP api search ', res.status)
-
     }
     return data as Address
-
   }
 }

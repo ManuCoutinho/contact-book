@@ -18,19 +18,19 @@ export function useCreateContact() {
   const defaultValues =
     contact != null
       ? {
-        name: contact.name,
-        phone: contact.phone,
-        cpf: contact.cpf,
-        street: contact.address.street,
-        number: contact.address.number,
-        city: contact.address.city,
-        state: contact.address.state,
-        country: 'Brasil',
-        cep: contact.address.cep,
-        neighborhood: contact.address.neighborhood,
-        complement: contact.address.complement ?? '',
-        location: contact.address.location
-      }
+          name: contact.name,
+          phone: contact.phone,
+          cpf: contact.cpf,
+          street: contact.address.street,
+          number: contact.address.number,
+          city: contact.address.city,
+          state: contact.address.state,
+          country: 'Brasil',
+          cep: contact.address.cep,
+          neighborhood: contact.address.neighborhood,
+          complement: contact.address.complement ?? '',
+          location: contact.address.location
+        }
       : { complement: '' }
 
   const [toast, setToast] = useState({
@@ -104,10 +104,7 @@ export function useCreateContact() {
             open: true,
             severity: 'success'
           })
-          setTimeout(
-            () => setUrlParams([{ key: 'mode', value: 'view' }]),
-            4500
-          )
+          setTimeout(() => setUrlParams([{ key: 'mode', value: 'view' }]), 4500)
         })
         .catch(() => {
           setToast({
@@ -127,13 +124,10 @@ export function useCreateContact() {
             open: true,
             severity: 'success'
           })
-          setTimeout(
-            () => {
-              deleteUrlParam(['contact'])
-              setUrlParams([{ key: 'mode', value: 'view' }])
-            },
-            4500
-          )
+          setTimeout(() => {
+            deleteUrlParam(['contact'])
+            setUrlParams([{ key: 'mode', value: 'view' }])
+          }, 4500)
         })
         .catch(() => {
           setToast({
@@ -143,7 +137,6 @@ export function useCreateContact() {
           })
         })
     }
-
   }
 
   function handleCloseToast() {

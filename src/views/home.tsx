@@ -1,14 +1,14 @@
 'use client'
-import dynamic from 'next/dynamic';
-import { useSearchParams } from 'next/navigation';
+import dynamic from 'next/dynamic'
+import { useSearchParams } from 'next/navigation'
 import { Card, Container, Divider, Grid, Typography } from '@mui/material'
-import MenuBookTwoToneIcon from '@mui/icons-material/MenuBookTwoTone';
+import MenuBookTwoToneIcon from '@mui/icons-material/MenuBookTwoTone'
 import { ContactList, Header, AddContactForm } from '@/components'
-import { GeoLocationProvider } from '@/contexts/geolocation.context';
-import { ContactProvider } from '@/contexts/contact.context';
-import type { Contact } from '@/types';
+import { GeoLocationProvider } from '@/contexts/geolocation.context'
+import { ContactProvider } from '@/contexts/contact.context'
+import type { Contact } from '@/types'
 
-const Map = dynamic(() => import('@/components/map'), { ssr: false });
+const Map = dynamic(() => import('@/components/map'), { ssr: false })
 
 export default function HomeView({ data }: Readonly<{ data: Contact[] }>) {
   const searchParams = useSearchParams()
@@ -26,9 +26,13 @@ export default function HomeView({ data }: Readonly<{ data: Contact[] }>) {
       <div>
         <span>
           <MenuBookTwoToneIcon fontSize='large' />
-          <Typography component='h1' variant='h3' sx={{ fontWeight: '700' }}>My Contacts</Typography>
+          <Typography component='h1' variant='h3' sx={{ fontWeight: '700' }}>
+            My Contacts
+          </Typography>
         </span>
-        <Typography component='h3' variant='subtitle2'>Guarde e gerencie sua lista de contatos</Typography>
+        <Typography component='h3' variant='subtitle2'>
+          Guarde e gerencie sua lista de contatos
+        </Typography>
       </div>
       <ContactProvider>
         <GeoLocationProvider>
@@ -36,7 +40,7 @@ export default function HomeView({ data }: Readonly<{ data: Contact[] }>) {
             <Grid container spacing={4}>
               <ContactList contacts={data} />
               <Divider orientation='vertical' flexItem />
-              {modeSelection[mode as keyof typeof modeSelection ?? 'view']}
+              {modeSelection[(mode as keyof typeof modeSelection) ?? 'view']}
             </Grid>
           </Card>
         </GeoLocationProvider>

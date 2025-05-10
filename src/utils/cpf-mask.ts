@@ -1,5 +1,3 @@
-
-
 export default function cpfMask(cpf: string | undefined | null) {
   if (!cpf) return
 
