@@ -37,7 +37,7 @@ export default function ContactList({
       setUrlParams([{ key: 'mode', value: 'create' }])
     }
   }
-  console.log('🙀', filteredData)
+
   return (
     <Grid size={4} className='min-h-max'>
       <Stack direction='row' justifyContent='space-between'>
